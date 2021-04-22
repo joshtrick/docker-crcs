@@ -159,7 +159,6 @@ RUN cd /workspace/tmp/ \
 RUN cd /workspace/tmp/ \
     && wget -O opencv-3.4.zip \
     https://codeload.github.com/opencv/opencv/zip/3.4 \
-    && ls \
     && unzip opencv-3.4.zip \
     && wget -O opencv_contrib-3.4.zip \
     https://codeload.github.com/opencv/opencv_contrib/zip/refs/heads/3.4 \
@@ -173,6 +172,10 @@ RUN cd /workspace/tmp/ \
     -DCMAKE_INSTALL_PREFIX=/usr/local/ \
     -DBUILD_PROTOBUF=OFF \
     -DBUILD_opencv_dnn=OFF \
+    -DBUILD_TESTS=OFF \
+    -DBUILD_PERF_TESTS=OFF \
+    -DBUILD_EXAMPLES=OFF \
+    -DBUILD_opencv_apps=OFF \
     -DWITH_CUBLAS=OFF \
     -DWITH_CUDA=OFF \
     -DWITH_CUFFT=OFF \
