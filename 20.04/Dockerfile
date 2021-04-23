@@ -13,6 +13,7 @@ RUN apt-get update -y \
     curl \
     ctags \
     ca-certificates \
+    cmake \
     dirmngr \
     freeglut3-dev \
     gnupg2 \
@@ -106,15 +107,6 @@ RUN apt-get update -y \
 
 RUN mkdir -p /workspace/tmp
 
-# Install cmake
-RUN cd /workspace/tmp/ \
-    && wget -O cmake-3.14.7-Linux-x86_64.tar.gz \
-    https://cmake.org/files/v3.14/cmake-3.14.7-Linux-x86_64.tar.gz \
-    && tar xzf cmake-3.14.7-Linux-x86_64.tar.gz \
-    && mv cmake-3.14.7-Linux-x86_64 /opt/cmake-3.14.7 \
-    && ln -sf /opt/cmake-3.14.7/bin/* /usr/bin/ \
-    && rm -rf /workspace/tmp/*
-
 # Install ffmpeg
 RUN cd /workspace/tmp/ \
     && wget -O ffmpeg-4.3.2.tar.bz2 \
@@ -122,10 +114,12 @@ RUN cd /workspace/tmp/ \
     && tar xvf ffmpeg-4.3.2.tar.bz2 \
     && cd ffmpeg-4.3.2/ \
     && ./configure \
+    --disable-yasm \
     --enable-shared \
     --enable-gpl \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-libmfx \
     --enable-vaapi \
     && make -j$MAKE_THREADS \
     && make install \
