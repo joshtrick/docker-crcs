@@ -173,7 +173,6 @@ RUN cd /workspace/tmp/ \
     --enable-gpl \
     --enable-libx264 \
     --enable-libx265 \
-    --enable-libmfx \
     --enable-vaapi \
     && make -j$MAKE_THREADS \
     && make install \
