@@ -5,8 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS yes
 ARG MAKE_THREADS=4
 
-RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends \
+RUN apt update -y \
+    && apt install -y --no-install-recommends \
     autoconf \
     automake \
     build-essential \
@@ -65,7 +65,7 @@ RUN apt-get update -y \
     net-tools \
     nasm \
     openssh-server \
-    pkg-config\
+    pkg-config \
     python3 \
     python3-dev \
     python3-pip \
@@ -88,6 +88,22 @@ RUN apt-get update -y \
            /var/tmp/* \
            /usr/share/doc/*
 
+# Install MediaSDK
+RUN apt update -y \
+    && apt install -y --no-install-recommends \
+    libmfx1 \
+    libmfx-tools \
+    ibva-drm2 \
+    libva-x11-2 \
+    vainfo \
+    intel-media-va-driver-non-free \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+           /tmp/* \
+           /var/tmp/* \
+           /usr/share/doc/*
+    && echo "export LIBVA_DRIVER_NAME=iHD" >> ~/.bashrc
+
 RUN mkdir -p /workspace/tmp
 
 # Install cmake
@@ -97,45 +113,6 @@ RUN cd /workspace/tmp/ \
     && tar xzf cmake-3.14.7-Linux-x86_64.tar.gz \
     && mv cmake-3.14.7-Linux-x86_64 /opt/cmake-3.14.7 \
     && ln -sf /opt/cmake-3.14.7/bin/* /usr/bin/ \
-    && rm -rf /workspace/tmp/*
-
-# Install libva
-RUN cd /workspace/tmp/ \
-    && wget -O libva-2.4-branch.zip \
-    https://codeload.github.com/intel/libva/zip/refs/heads/v2.4-branch \
-    && unzip libva-2.4-branch.zip \
-    && cd libva-2.4-branch \
-    && ./autogen.sh \
-    && ./configure \
-    && make -j$MAKE_THREADS \
-    && make install \
-    && ldconfig \
-    && rm -rf /workspace/tmp/*
-
-# Install intel-vaapi-driver
-RUN cd /workspace/tmp/ \
-    && wget -O intel-vaapi-driver-1.6-branch.zip \
-    https://codeload.github.com/intel/intel-vaapi-driver/zip/refs/heads/v1.6-branch \
-    && unzip intel-vaapi-driver-1.6-branch.zip \
-    && cd intel-vaapi-driver-1.6-branch \
-    && ./autogen.sh \
-    && ./configure \
-    && make -j$MAKE_THREADS \
-    && make install \
-    && ldconfig \
-    && rm -rf /workspace/tmp/*
-
-# Install libva-utils
-RUN cd /workspace/tmp/ \
-    && wget -O libva-utils-2.4.0.zip \
-    https://codeload.github.com/intel/libva-utils/zip/refs/tags/2.4.0 \
-    && unzip libva-utils-2.4.0.zip \
-    && cd libva-utils-2.4.0 \
-    && ./autogen.sh \
-    && ./configure \
-    && make -j$MAKE_THREADS \
-    && make install \
-    && ldconfig \
     && rm -rf /workspace/tmp/*
 
 # Install ffmpeg
