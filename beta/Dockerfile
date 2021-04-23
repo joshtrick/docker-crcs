@@ -1,12 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 MAINTAINER hao jiang (hao.jiang@corerain.com)
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS yes
 ARG MAKE_THREADS=4
 
-RUN apt update -y \
-    && apt install -y --no-install-recommends \
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends \
     autoconf \
     automake \
     build-essential \
@@ -89,11 +89,11 @@ RUN apt update -y \
            /usr/share/doc/*
 
 # Install MediaSDK
-RUN apt update -y \
-    && apt install -y --no-install-recommends \
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends \
     libmfx1 \
     libmfx-tools \
-    ibva-drm2 \
+    libva-drm2 \
     libva-x11-2 \
     vainfo \
     intel-media-va-driver-non-free \
@@ -101,7 +101,7 @@ RUN apt update -y \
     && rm -rf /var/lib/apt/lists/* \
            /tmp/* \
            /var/tmp/* \
-           /usr/share/doc/*
+           /usr/share/doc/* \
     && echo "export LIBVA_DRIVER_NAME=iHD" >> ~/.bashrc
 
 RUN mkdir -p /workspace/tmp
@@ -117,10 +117,10 @@ RUN cd /workspace/tmp/ \
 
 # Install ffmpeg
 RUN cd /workspace/tmp/ \
-    && wget -O ffmpeg-4.1.tar.bz2 \
-    https://ffmpeg.org/releases/ffmpeg-4.1.tar.bz2 \
-    && tar xvf ffmpeg-4.1.tar.bz2 \
-    && cd ffmpeg-4.1/ \
+    && wget -O ffmpeg-4.3.2.tar.bz2 \
+    https://ffmpeg.org/releases/ffmpeg-4.3.2.tar.bz2 \
+    && tar xvf ffmpeg-4.3.2.tar.bz2 \
+    && cd ffmpeg-4.3.2/ \
     && ./configure \
     --enable-shared \
     --enable-gpl \
