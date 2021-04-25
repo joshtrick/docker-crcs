@@ -92,12 +92,10 @@ RUN apt-get update -y \
            /usr/share/doc/*
 
 # Change gcc and g++ to 7
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 30 \
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 20 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 30 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 20 \
-    && gcc -v \
-    && g++ -v
+RUN rm /usr/bin/gcc \
+    && rm /usr/bin/g++ \
+    && ln -s /usr/bin/gcc-7 /usr/bin/gcc \
+    && ln -s /usr/bin/g++-7 /usr/bin/g++
 
 # Install MediaSDK
 RUN apt-get update -y \
