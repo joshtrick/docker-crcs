@@ -21,6 +21,8 @@ RUN apt-get update -y \
     graphviz \
     gawk \
     git \
+    gcc-7 \
+    g++-7 \
     id-utils \
     libssl-dev \
     libpq-dev \
@@ -88,6 +90,14 @@ RUN apt-get update -y \
            /tmp/* \
            /var/tmp/* \
            /usr/share/doc/*
+
+# Change gcc and g++ to 7
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 30 \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 20 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 30 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 20 \
+    && gcc -v \
+    && g++ -v
 
 # Install MediaSDK
 RUN apt-get update -y \
