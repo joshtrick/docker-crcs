@@ -122,7 +122,6 @@ RUN cd /workspace/tmp/ \
     && tar xvf ffmpeg-4.3.2.tar.bz2 \
     && cd ffmpeg-4.3.2/ \
     && ./configure \
-    --disable-yasm \
     --enable-shared \
     --enable-gpl \
     --enable-libx264 \
