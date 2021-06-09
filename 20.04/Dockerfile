@@ -175,6 +175,7 @@ RUN cd /workspace/tmp/ \
     && cd protobuf-3.5.1.1 \
     && ./autogen.sh \
     && ./configure \
+    --enable-static=no \
     && make -j$MAKE_THREADS \
     && make install \
     && ldconfig \
