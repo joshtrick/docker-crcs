@@ -52,6 +52,7 @@ RUN apt-get update -y \
     libv4l-dev \
     libasound2-dev \
     libevent-dev \
+    libcurl4-openssl-dev \
     libopenexr-dev \
     librtmp-dev \
     mesa-common-dev \
@@ -238,15 +239,6 @@ RUN cd /workspace/tmp/ \
     && cp -r install/include/* /usr/local/include/mpp \
     && ldconfig \
     && rm -rf /workspace/tmp/*
-
-# Install ping
-RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-           /tmp/* \
-           /var/tmp/* \
-           /usr/share/doc/*
 
 # Finished
 # To build an image:
