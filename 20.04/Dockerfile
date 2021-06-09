@@ -24,6 +24,7 @@ RUN apt-get update -y \
     gcc-7 \
     g++-7 \
     id-utils \
+    iputils-ping \
     libssl-dev \
     libpq-dev \
     libtool \
@@ -122,6 +123,7 @@ RUN cd /workspace/tmp/ \
     && tar xvf ffmpeg-4.3.2.tar.bz2 \
     && cd ffmpeg-4.3.2/ \
     && ./configure \
+    --disable-static \
     --enable-shared \
     --enable-gpl \
     --enable-libx264 \
@@ -146,6 +148,7 @@ RUN cd /workspace/tmp/ \
     && cmake .. \
     -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.4/modules \
     -DCMAKE_BUILD_TYPE=release \
+    -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_INSTALL_PREFIX=/usr/local/ \
     -DBUILD_PROTOBUF=OFF \
     -DBUILD_opencv_dnn=OFF \
